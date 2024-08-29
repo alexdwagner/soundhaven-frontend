@@ -12,19 +12,19 @@ import { useAuth } from "@/hooks/UseAuth";
 import { useTracks } from "@/hooks/UseTracks";
 import PlaylistItem from "./PlaylistItem";
 import DuplicateTrackModal from "./DuplicateTrackModal";
-import {
-  DndContext,
-  useDraggable,
-  useDroppable,
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  arrayMove,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
+// import {
+//   DndContext,
+//   useDraggable,
+//   useDroppable,
+// } from "@dnd-kit/core";
+// import {
+//   SortableContext,
+//   sortableKeyboardCoordinates,
+//   arrayMove,
+//   verticalListSortingStrategy,
+// } from '@dnd-kit/sortable';
 
-import DragDropErrorBoundary from "@/error-boundaries/DragDropErrorBoundary";
+// import DragDropErrorBoundary from "@/error-boundaries/DragDropErrorBoundary";
 
 interface PlaylistSidebarProps {
   onSelectPlaylist: (tracks: Track[], playlistId: number) => void;
@@ -268,21 +268,21 @@ const PlaylistSidebar: React.FC<PlaylistSidebarProps> = ({
     playlists.map((p) => p.id)
   );
 
-  console.log("Rendering Droppable");
+  // console.log("Rendering Droppable");
 
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (active.id !== over.id) {
-      const oldIndex = playlists.findIndex((p) => p.id === Number(active.id));
-      const newIndex = playlists.findIndex((p) => p.id === Number(over.id));
-      const reorderedPlaylists = arrayMove(playlists, oldIndex, newIndex);
-      setPlaylists(reorderedPlaylists);
-      updatePlaylistOrder(reorderedPlaylists.map((p) => p.id));
-    }
-  };
+  // const handleDragEnd = (event) => {
+  //   const { active, over } = event;
+  //   if (active.id !== over.id) {
+  //     const oldIndex = playlists.findIndex((p) => p.id === Number(active.id));
+  //     const newIndex = playlists.findIndex((p) => p.id === Number(over.id));
+  //     const reorderedPlaylists = arrayMove(playlists, oldIndex, newIndex);
+  //     setPlaylists(reorderedPlaylists);
+  //     updatePlaylistOrder(reorderedPlaylists.map((p) => p.id));
+  //   }
+  // };
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    // <DndContext onDragEnd={handleDragEnd}>
       <div className="playlist-sidebar p-4 bg-gray-800 text-white min-w-48">
         <button
           className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded"
@@ -301,11 +301,11 @@ const PlaylistSidebar: React.FC<PlaylistSidebarProps> = ({
         <h3 className="font-bold my-1 py-2 border-b border-t border-gray-600">
           Playlists
         </h3>
-
+{/* 
         <SortableContext
           items={playlists.map((p) => p.id.toString())}
           strategy={verticalListSortingStrategy}
-        >
+        > */}
           <ul className="px-1">
             {playlists.map((playlist) => (
               <PlaylistItem
@@ -314,15 +314,15 @@ const PlaylistSidebar: React.FC<PlaylistSidebarProps> = ({
                 onEdit={() => {}}
                 onSelect={() => handlePlaylistSelect(playlist.id)}
                 isSelected={playlist.id === selectedPlaylistId}
-                onDrop={(e) => {
-                  const trackId = Number(e.dataTransfer.getData("text/plain"));
-                  handleAddTrackToPlaylist(playlist.id, trackId);
-                }}
+                // onDrop={(e) => {
+                //   const trackId = Number(e.dataTransfer.getData("text/plain"));
+                //   handleAddTrackToPlaylist(playlist.id, trackId);
+                // }}
                 onDelete={() => handleDeletePlaylist(playlist.id)}
               />
             ))}
           </ul>
-        </SortableContext>
+        {/* </SortableContext> */}
 
         <DuplicateTrackModal
           isOpen={isDuplicateModalOpen}
@@ -330,7 +330,7 @@ const PlaylistSidebar: React.FC<PlaylistSidebarProps> = ({
           onConfirm={handleConfirmDuplicateAdd}
         />
       </div>
-    </DndContext>
+    // </DndContext>
   );
 };
 

@@ -10,7 +10,6 @@ import Modal from '@/components/Modal';
 import NavBar from '@/components/layout/NavBar';
 import { useRouter } from 'next/router';
 import { useTracks } from '@/hooks/UseTracks';
-import DragAndDropWrapper from '@/components/layout/DragAndDropWrapper';
 
 const HomePage: React.FC = () => {
   const [error, setError] = useState('');
@@ -81,10 +80,8 @@ const HomePage: React.FC = () => {
 
         <Header />
 
-        
-        <DragAndDropWrapper />
-
         <MainContent error={error}/>
+
       </div>
 
       <Modal isOpen={isModalOpen} onClose={toggleModal}>

@@ -14,6 +14,7 @@ import PlaylistSidebar from "../playlists/PlaylistSidebar";
 import DuplicateTrackModal from "../playlists/DuplicateTrackModal";
 import { usePlaylists } from "@/hooks/UsePlaylists";
 import DeleteConfirmationModal from "../modals/DeleteConfirmationModal";
+import DragAndDropWrapper from '@/components/layout/DragAndDropWrapper';
 
 interface MainContentProps {
   error: string;
@@ -322,15 +323,37 @@ const MainContent: React.FC<MainContentProps> = ({ error }) => {
     ]
   );
 
+  useEffect(() => {
+    const handleDrag = (event) => {
+      console.log('Dragging:', event);
+    };
+    const handleDrop = (event) => {
+      console.log('Dropping:', event);
+    };
+
+    window.addEventListener('dragstart', handleDrag);
+    window.addEventListener('drop', handleDrop);
+
+    return () => {
+      window.removeEventListener('dragstart', handleDrag);
+      window.removeEventListener('drop', handleDrop);
+    };
+  }, []);
+
   return (
     <main className="flex flex-col p-4 mx-auto w-full">
+
       <div className="flex">
         <div className="w-1/4">
-          <PlaylistSidebar
+
+        <DragAndDropWrapper className="relative">
+        <PlaylistSidebar
             onSelectPlaylist={handleSelectPlaylist}
             onViewAllTracks={clearSelectedPlaylist}
             onDeletePlaylist={handleDeletePlaylist}
           />
+        </DragAndDropWrapper>
+
         </div>
         <div className="w-3/4">
           <button
@@ -354,6 +377,9 @@ const MainContent: React.FC<MainContentProps> = ({ error }) => {
             </div>
           </div>
           <FileUpload onUploadSuccess={handleUploadSuccess} />
+
+          <DragAndDropWrapper className="relative">
+
           <TracksTable
             tracks={displayTracks}
             onSelectTrack={handleSelectTrack}
@@ -367,6 +393,9 @@ const MainContent: React.FC<MainContentProps> = ({ error }) => {
             selectedTrackId={selectedTrackId}
             onReorderTracks={handleReorderTracks}
           />
+          </DragAndDropWrapper>
+
+
           {/* <div className="flex flex-col"> */}
           {currentTrack?.id && showComments && (
             <CommentsPanel

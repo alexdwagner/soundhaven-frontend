@@ -118,11 +118,12 @@ const TracksTable: React.FC<TracksTableProps> = ({
   console.log("TracksTable: Rendering with tracks", tracks);
 
   return (
-    <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <SortableContext
-        items={tracks.map((track) => track.id)}
-        strategy={verticalListSortingStrategy}
-      >
+    // <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+    //   <SortableContext
+    //     items={tracks.map((track) => track.id)}
+    //     strategy={verticalListSortingStrategy}
+    //   >
+    <>
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
@@ -169,8 +170,9 @@ const TracksTable: React.FC<TracksTableProps> = ({
             />
           )}
         </Modal>
-      </SortableContext>
-    </DndContext>
+    {/* </SortableContext> */}
+     {/* </DndContext> */}
+     </>
   );
 };
 

@@ -52,9 +52,10 @@ const TrackItem: React.FC<TrackItemProps> = ({
     selectTrack(track, index);
   };
 
-  // const handleDragStart = (e: React.DragEvent<HTMLTableRowElement>) => {
-  //   e.dataTransfer.setData("text/plain", track.id.toString());
-  // };
+  const handleDragStart = (e: React.DragEvent<HTMLTableRowElement>) => {
+    console.log(`Dragging track: ${track.id}`);
+    e.dataTransfer.setData("text/plain", track.id.toString());
+  };
 
   const toggleMenu = (id: number, event: React.MouseEvent) => {
     event.stopPropagation();
@@ -90,6 +91,8 @@ const TrackItem: React.FC<TrackItemProps> = ({
       {...listeners}
       onClick={handleClick}
       onDoubleClick={handleDoubleClick}
+      onDragStart={handleDragStart}
+      draggable={true}
       className={`hover:bg-gray-100 ${isCurrent ? "bg-blue-100" : ""} ${
         isSelected ? "bg-blue-200" : ""
       } ${isDragging ? "bg-gray-100" : ""}`}

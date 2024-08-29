@@ -9,7 +9,7 @@ interface PlaylistItemProps {
   onSelect: (playlistId: number) => void;
   isSelected: boolean;
   onDelete: () => void;
-  onDrop: (e: React.DragEvent<HTMLLIElement>) => void;
+  onDrop?: (e: React.DragEvent<HTMLLIElement>) => void; // Optional now
 }
 
 const PlaylistItem: React.FC<PlaylistItemProps> = ({
@@ -51,9 +51,10 @@ const PlaylistItem: React.FC<PlaylistItemProps> = ({
   //     await deletePlaylist(playlist.id);
   //   };
 
-  const handleDrop = async (e: React.DragEvent<HTMLLIElement>) => {
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const trackId = e.dataTransfer.getData("text/plain");
+    console.log("DataTransfer:", e.dataTransfer);
     console.log(`Dropping track ${trackId} into playlist ${playlist.id}`);
     try {
       await addTrackToPlaylist(playlist.id, Number(trackId));
@@ -99,13 +100,16 @@ const PlaylistItem: React.FC<PlaylistItemProps> = ({
         e.stopPropagation();
         onSelect(playlist.id);
       }}
+      onDrop={handleDrop}
+      onDragOver={(e) => e.preventDefault()}
       className={`playlist-item flex items-center justify-between p-2 mb-2 rounded-lg cursor-pointer ${
         isSelected ? "bg-gray-700" : "hover:bg-gray-600"
       }`}
     >
       <li
-        onDrop={onDrop}
-        onDragOver={(e) => e.preventDefault()}
+        // data-playlist-id={playlist.id}
+        // onDrop={onDrop}
+        // onDragOver={(e) => e.preventDefault()}
         className="w-full flex items-center justify-between"
       >
         {isEditing ? (
