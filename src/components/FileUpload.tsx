@@ -5,15 +5,15 @@ import { Track } from '../../types/types';
 interface FileUploadProps {
     onUploadSuccess: () => void;
 }
-
-    const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
-        const [uploading, setUploading] = useState(false);
+export const extractTitleFromFileName = (fileName: string) => {
+    // Remove file extension and replace underscores/dashes with spaces
+    return fileName.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ');
+};
+const FileUpload: React.FC<FileUploadProps> = ({ onUploadSuccess }) => {
+    const [uploading, setUploading] = useState(false);
     const { uploadTrack } = useTracks(); // Use the `useTracks` hook
 
-    const extractTitleFromFileName = (fileName: string) => {
-        // Remove file extension and replace underscores/dashes with spaces
-        return fileName.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ');
-    };
+
 
     const handleFileUpload = async (file: File) => {
         setUploading(true);
@@ -56,7 +56,7 @@ interface FileUploadProps {
                 </label>
             </div>
         </div>
-    );       
+    );
 };
 
 export default FileUpload;
